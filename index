@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>語光龍行 — 靈魂導向 · 意識清明 · 真實轉化</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8CC7A;--gold-dim:#8A6B2A;
+  --black-deep:#04080C;--black-mid:#070E14;--black-soft:#0A1520;
+  --cyan:#00C4D4;--cyan-mid:#0099AA;--cyan-deep:#005F6E;
+  --text-gold:#E8CC7A;--text-light:#EEF8FA;--text-muted:#7BBFCC;
+}
+html{scroll-behavior:smooth}
+body{background:#04080C;font-family:'Noto Serif TC',serif;color:var(--text-light);margin:0}
+canvas.wave{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+.nav{position:fixed;top:0;right:0;z-index:100;display:flex;background:rgba(4,8,12,0.92);backdrop-filter:blur(10px);border-bottom-left-radius:8px;border:0.5px solid rgba(0,196,212,.12);border-top:none;border-right:none}
+.nav a{padding:13px 20px;font-family:'Noto Serif TC',serif;font-size:11px;letter-spacing:.28em;color:var(--text-muted);text-decoration:none;cursor:pointer;transition:color .3s;white-space:nowrap;display:inline-block}
+.nav a:hover{color:var(--text-gold)}
+.nav a+a{border-left:0.5px solid rgba(0,196,212,.1)}
+
+.hero{position:relative;background:linear-gradient(175deg,#04080C 0%,#071018 50%,#041214 100%);padding:100px 40px 120px;text-align:center;overflow:hidden;min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero-brand{font-size:12px;color:var(--gold-dim);letter-spacing:.5em;margin-bottom:32px;position:relative;z-index:1}
+.hero-title{font-size:clamp(24px,4vw,42px);font-weight:300;color:var(--text-gold);letter-spacing:.18em;line-height:1.75;position:relative;z-index:1;text-shadow:0 0 60px rgba(0,196,212,.15),0 0 30px rgba(201,168,76,.2)}
+.gold-line{width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:26px auto;position:relative;z-index:1}
+.hero-sub{font-size:13px;color:var(--cyan);letter-spacing:.25em;position:relative;z-index:1;text-shadow:0 0 20px rgba(0,196,212,.4)}
+.cta-btn{display:inline-block;margin-top:40px;padding:13px 38px;border:1px solid var(--gold);color:var(--gold);font-family:'Noto Serif TC',serif;font-size:13px;letter-spacing:.28em;cursor:pointer;background:transparent;transition:all .4s;border-radius:2px;position:relative;z-index:1}
+.cta-btn:hover{background:rgba(0,196,212,.08);box-shadow:0 0 28px rgba(0,196,212,.15)}
+
+.story-wrap{background:linear-gradient(180deg,#04080C,#060E12);padding:72px 40px}
+.section-label{font-size:11px;letter-spacing:.5em;color:var(--gold-dim);text-align:center;margin-bottom:12px;text-transform:uppercase}
+.section-title{font-size:clamp(20px,2.8vw,28px);font-weight:300;color:var(--text-gold);text-align:center;letter-spacing:.12em;line-height:1.75}
+.story-body{font-size:14px;line-height:2.2;color:var(--text-muted);text-align:center;margin-top:28px;max-width:640px;margin-left:auto;margin-right:auto}
+
+.svc-wrap{background:linear-gradient(180deg,#060E12,#09161C);padding:48px 0 72px}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;max-width:900px;margin:48px auto 0;background:rgba(0,196,212,.08)}
+.svc-card{background:linear-gradient(150deg,#060C12,#0A1820);padding:40px 26px;text-align:center;position:relative;transition:background .4s}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .4s}
+.svc-card:hover::after{opacity:1}
+.svc-card:hover{background:linear-gradient(150deg,#0A1620,#102030)}
+.svc-icon{font-size:24px;margin-bottom:20px;display:block;color:#ffffff}
+.svc-title-zh{font-size:16px;color:var(--text-gold);letter-spacing:.1em;font-weight:400;line-height:1.5}
+.svc-title-en{font-size:10px;color:var(--gold-dim);letter-spacing:.35em;margin-top:6px;text-transform:uppercase}
+.svc-desc{font-size:13px;color:var(--text-muted);margin-top:16px;line-height:2}
+
+.testimonials{background:linear-gradient(180deg,#09161C,#060C10);padding:72px 40px}
+.testimony-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:900px;margin:40px auto 0}
+.testimony-card{border:0.5px solid rgba(0,196,212,.15);padding:30px 24px;background:rgba(4,12,18,.6);position:relative}
+.testimony-card::before{content:'❝';position:absolute;top:-12px;left:20px;font-size:28px;color:var(--cyan);opacity:.3;font-family:Georgia,serif}
+.testimony-text{font-size:13px;color:var(--text-light);line-height:2.1}
+.testimony-name{font-size:11px;color:var(--gold-dim);margin-top:14px;letter-spacing:.3em}
+.testimony-tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:10px;color:var(--cyan);letter-spacing:.12em;border:0.5px solid rgba(0,196,212,.3);padding:3px 8px;border-radius:20px;background:rgba(0,196,212,.05)}
+
+.philosophy{padding:72px 40px;text-align:center;background:linear-gradient(180deg,#060C10,#04080C)}
+.phil-text{font-size:clamp(14px,1.8vw,17px);color:var(--text-light);line-height:2.3;max-width:620px;margin:28px auto 0;font-weight:300}
+.phil-em{color:var(--text-gold)}
+
+.final-cta{background:linear-gradient(170deg,#04080C,#071420);padding:100px 40px;text-align:center;position:relative;overflow:hidden}
+.final-cta-title{font-size:clamp(20px,3vw,30px);color:var(--text-gold);font-weight:300;letter-spacing:.15em;line-height:1.8;position:relative;z-index:1}
+.final-cta-sub{font-size:13px;color:var(--cyan);margin-top:18px;letter-spacing:.18em;position:relative;z-index:1}
+.cta-row{display:flex;gap:16px;justify-content:center;margin-top:40px;flex-wrap:wrap;position:relative;z-index:1}
+.btn-primary{padding:13px 40px;background:linear-gradient(135deg,#8A6B2A,#C9A84C);color:#04080C;font-family:'Noto Serif TC',serif;font-size:13px;letter-spacing:.28em;border:none;cursor:pointer;border-radius:2px;font-weight:500;transition:all .3s;text-decoration:none;display:inline-block}
+.btn-primary:hover{box-shadow:0 6px 28px rgba(201,168,76,.35);transform:translateY(-1px)}
+.btn-secondary{padding:13px 40px;background:transparent;color:var(--cyan);font-family:'Noto Serif TC',serif;font-size:13px;letter-spacing:.28em;border:1px solid rgba(0,196,212,.4);cursor:pointer;border-radius:2px;transition:all .3s;text-decoration:none;display:inline-block}
+.btn-secondary:hover{background:rgba(0,196,212,.07)}
+
+footer{background:#030608;padding:28px 40px;text-align:center;border-top:0.5px solid rgba(0,196,212,.08)}
+footer p{font-size:11px;color:var(--gold-dim);letter-spacing:.35em}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#services">服務項目</a>
+  <a href="#testimonials">客戶見證</a>
+  <a href="#finalcta">預約服務</a>
+</nav>
+
+<section class="hero">
+  <canvas class="wave" id="waveHero"></canvas>
+  <canvas class="wave" id="rippleHero"></canvas>
+  <p class="hero-brand">語光龍行</p>
+  <h1 class="hero-title">你不需要被修復<br>你只是還沒想起自己是誰</h1>
+  <div class="gold-line"></div>
+  <p class="hero-sub">靈魂導向 · 意識清明 · 真實轉化</p>
+  <button class="cta-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">探索服務</button>
+</section>
+
+<div class="story-wrap">
+  <div style="max-width:900px;margin:0 auto">
+    <p class="section-label">關於語光龍行</p>
+    <h2 class="section-title">從數字的精準<br>到靈魂的深度</h2>
+    <p class="story-body">
+      我帶著會計的理性頭腦走入靈性世界——<br>
+      不是偶然，而是命定。<br><br>
+      每一次靈魂帶領的催眠，每一次牌卡的占卜，<br>
+      我們看見的不是外在的行為，而是信念。<br>
+      是那些深埋在潛意識底層、等待被看見的真相。<br><br>
+      <span style="color:var(--text-gold)">語光龍行，是一個讓你看見自己的空間。</span>
+    </p>
+  </div>
+</div>
+
+<div id="services" class="svc-wrap">
+  <div style="text-align:center;padding:0 40px">
+    <p class="section-label">服務</p>
+    <h2 class="section-title">三條通往自己的路徑</h2>
+  </div>
+  <div class="services">
+    <div class="svc-card">
+      <span class="svc-icon">◈</span>
+      <div class="svc-title-zh">靈魂導向催眠療育</div>
+      <div class="svc-title-en">Soul-Guided Hypnotherapy</div>
+      <p class="svc-desc">繞過頭腦的防衛機制，直抵潛意識核心。不是放鬆，不是暗示，而是一場與自己靈魂的真實對話。</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-icon">◉</span>
+      <div class="svc-title-zh">潛意識探索</div>
+      <div class="svc-title-en">Subconscious Exploration</div>
+      <p class="svc-desc">那些重複的模式、無名的恐懼、說不清的渴望——它們都有根源。我們一起進入潛意識，看見背後的原因，拾回自己的力量。</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-icon">✦</span>
+      <div class="svc-title-zh">直覺式牌卡占卜</div>
+      <div class="svc-title-en">Intuitive Card Divination</div>
+      <p class="svc-desc">牌不是命運的審判，而是靈魂的鏡子。每一張牌，也許都在說你知道、但尚未意識到的事情。</p>
+    </div>
+  </div>
+</div>
+
+<div id="testimonials" class="testimonials">
+  <p class="section-label" style="text-align:center">靈魂共鳴</p>
+  <h2 class="section-title">有些改變，不需要解釋</h2>
+  <div class="testimony-grid">
+    <div class="testimony-card">
+      <p class="testimony-text">Mana的引導讓人非常輕鬆也很快能進入狀態，也帶領我看見自己身體能量卡住，還有腦中有根深蒂固限制性想法，並且將其一一移除。這次的療癒結束，內在收穫滿滿，也覺得好開心✨ 內在需要被清理被看見，期待之後我的實相也能跟著轉變！</p>
+      <p class="testimony-name">— Ann · 天使靈氣學員</p>
+      <div class="testimony-tags"><span class="tag">#潛意識探索</span><span class="tag">#能量清理</span><span class="tag">#元辰宮探索</span></div>
+    </div>
+    <div class="testimony-card">
+      <p class="testimony-text">不得不說很神奇的是在補滿米缸以後，我去換先前買的彩券，意外中了$400，真的是很有趣的體驗。非常感謝Mana，不因為時間因素催促，很有耐心的引導我陪伴我完成這兩次的體驗旅程。日後有機會還會想找Mana協助撿靈魂碎片＆觀元辰宮。</p>
+      <p class="testimony-name">— Chung · 天使靈氣學員</p>
+      <div class="testimony-tags"><span class="tag">#潛意識探索</span><span class="tag">#元辰宮探索</span><span class="tag">#收回靈魂碎片</span></div>
+    </div>
+    <div class="testimony-card">
+      <p class="testimony-text">很有趣的生命樹體驗，有別於上次妳看到再轉述給我，這次是我自己看到，神奇的是妳竟然能看到我想像的畫面，好酷🧐 妳的聲音溫柔穩定，讓人放鬆很快的跟著妳的話語進入狀態，過程舒服順利😊</p>
+      <p class="testimony-name">— Huang · 同事</p>
+      <div class="testimony-tags"><span class="tag">#生命樹</span><span class="tag">#能量清理</span><span class="tag">#身心指標</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="philosophy">
+  <p class="section-label">意識清明</p>
+  <h2 class="section-title">靈性，不是逃避現實<br>而是看清現實的另一雙眼</h2>
+  <p class="phil-text">
+    我相信<span class="phil-em">當人準備好，去看見信念、去轉化思維、能帶來真實改變</span>，<br>
+    探索靈性才有落地的力量。<br><br>
+    不是儀式，不是安慰劑，而是一種你可以帶回日常生活的能力——<br>
+    看見自己，選擇自己，<span class="phil-em">成為自己</span>。
+  </p>
+</div>
+
+<div id="finalcta" class="final-cta">
+  <canvas class="wave" id="waveCta"></canvas>
+  <canvas class="wave" id="rippleCta"></canvas>
+  <p class="section-label" style="position:relative;z-index:1">開始你的旅程</p>
+  <h2 class="final-cta-title">你已經在路上了<br>如果想要一個嚮導陪你看見</h2>
+  <p class="final-cta-sub">預約一次初談，讓我們一起踏上這趟旅程</p>
+  <div class="cta-row">
+    <a class="btn-primary" href="https://docs.google.com/forms/d/1pIvd7suHdrKQ9b2VD5Wb7oZuhnBHRwM4rKx6sUwMWE0/edit" target="_blank">預約聊聊</a>
+    <a class="btn-secondary" href="https://portaly.cc/together_in_light" target="_blank">了解更多服務</a>
+  </div>
+</div>
+
+<footer>
+  <p>語光龍行　｜　意識清明 · 真實轉化</p>
+</footer>
+
+<script>
+function initWave(id,tOff){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d'),par=c.parentElement;
+  let W,H,t=tOff||0;
+  function resize(){W=c.width=par.offsetWidth;H=c.height=par.offsetHeight}
+  resize();window.addEventListener('resize',resize);
+  let streaks=[];
+  function mkS(){const iC=Math.random()>.35;streaks.push({x:Math.random()*W,y:Math.random()*H,len:80+Math.random()*140,angle:Math.PI*(.05+Math.random()*.25),alpha:iC?.12+Math.random()*.12:.06+Math.random()*.08,speed:.5+Math.random()*.6,progress:0,col:iC?'0,196,212':'201,168,76',width:iC?1.2:.7});}
+  for(let i=0;i<8;i++)mkS();setInterval(mkS,1400);
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=.007;
+    const waves=[{amp:20,freq:.007,spd:.55,a:.07,col:'0,196,212',w:1.4},{amp:14,freq:.011,spd:.85,a:.06,col:'0,196,212',w:1.0},{amp:9,freq:.016,spd:1.1,a:.05,col:'26,212,200',w:.8},{amp:25,freq:.004,spd:.35,a:.04,col:'0,153,170',w:1.8},{amp:6,freq:.022,spd:1.4,a:.04,col:'201,168,76',w:.5}];
+    waves.forEach(w=>{const rows=Math.ceil(H/24);for(let r=0;r<rows;r++){const baseY=r*24+12;ctx.beginPath();for(let x=0;x<=W;x+=2){const y=baseY+Math.sin(x*w.freq+t*w.spd+r*.9)*w.amp;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.strokeStyle=`rgba(${w.col},${w.a*(0.3+0.7*(r/rows))})`;ctx.lineWidth=w.w;ctx.stroke();}});
+    ctx.save();for(let i=0;i<6;i++){const sx=(t*80+i*137)%W,sy=H*(.2+i*.12)+Math.sin(t*1.2+i)*18,g=ctx.createRadialGradient(sx,sy,0,sx,sy,22);g.addColorStop(0,'rgba(0,229,245,0.18)');g.addColorStop(1,'rgba(0,196,212,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(sx,sy,22,0,Math.PI*2);ctx.fill();}ctx.restore();
+    streaks=streaks.filter(s=>{s.progress+=s.speed;const x2=s.x+Math.cos(s.angle)*s.progress,y2=s.y+Math.sin(s.angle)*s.progress,x1=s.x+Math.cos(s.angle)*Math.max(0,s.progress-50),y1=s.y+Math.sin(s.angle)*Math.max(0,s.progress-50),g=ctx.createLinearGradient(x1,y1,x2,y2);g.addColorStop(0,`rgba(${s.col},0)`);g.addColorStop(.5,`rgba(${s.col},${s.alpha*(1-s.progress/s.len*.5)})`);g.addColorStop(1,`rgba(${s.col},0)`);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=g;ctx.lineWidth=s.width;ctx.stroke();return s.progress<s.len+50;});
+    requestAnimationFrame(draw);}
+  draw();}
+
+function initRipples(id){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d'),par=c.parentElement;
+  let W,H,drops=[];
+  function resize(){W=c.width=par.offsetWidth;H=c.height=par.offsetHeight}
+  resize();window.addEventListener('resize',resize);
+  function mk(){const iC=Math.random()>.3;drops.push({x:Math.random()*W,y:Math.random()*H,r:0,max:60+Math.random()*110,a:iC?.14+Math.random()*.1:.07+Math.random()*.07,sp:.4+Math.random()*.5,col:iC?'0,196,212':'201,168,76'});}
+  for(let i=0;i<6;i++)mk();setInterval(mk,1500);
+  function draw(){ctx.clearRect(0,0,W,H);drops=drops.filter(d=>{d.r+=d.sp;const p=d.r/d.max,a=d.a*(1-p);ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.strokeStyle=`rgba(${d.col},${a})`;ctx.lineWidth=.8;ctx.stroke();if(d.r>20){ctx.beginPath();ctx.arc(d.x,d.y,d.r*.55,0,Math.PI*2);ctx.strokeStyle=`rgba(${d.col},${a*.4})`;ctx.lineWidth=.4;ctx.stroke();}return d.r<d.max;});requestAnimationFrame(draw);}
+  draw();}
+
+initWave('waveHero',0);initWave('waveCta',2.5);
+initRipples('rippleHero');initRipples('rippleCta');
+</script>
+</body>
+</html>
