@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>靈魂圖書館 — 語光龍行</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0E0906;--gold:#D4962E;--gold-dim:#7A5218;--amber:#E8B86D;--amber-soft:#F2D5A0;
+  --paper:#F5EDD8;--ink:#2C1F0E;--ink2:#4A3520;--ink3:#7A6040;
+  --warm:#C47A2A;--text-muted:#8A7058;--card-border:rgba(180,130,60,0.2);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);font-family:'Noto Serif TC',serif;color:var(--amber-soft);margin:0}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:rgba(14,9,6,0.96);border-bottom:0.5px solid rgba(180,130,60,0.12);position:sticky;top:0;z-index:100}
+.nav-brand{font-size:12px;color:var(--gold);letter-spacing:.35em}
+.nav-back{font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-decoration:none;transition:color .3s}
+.nav-back:hover{color:var(--amber)}
+
+.hero{padding:52px 32px 40px;text-align:center;border-bottom:0.5px solid rgba(180,130,60,0.08)}
+.hero-label{font-size:11px;letter-spacing:.5em;color:var(--text-muted);margin-bottom:10px;text-transform:uppercase}
+.hero-title{font-size:clamp(26px,3.5vw,36px);font-weight:300;color:var(--amber);letter-spacing:.12em;line-height:1.6;margin-bottom:18px}
+.hero-divider{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:0 auto 18px}
+.hero-sub{font-size:12px;color:var(--text-muted);letter-spacing:.18em;line-height:1.9}
+
+.controls{display:flex;align-items:center;justify-content:space-between;padding:24px 32px 14px;flex-wrap:wrap;gap:14px}
+.filter-wrap{display:flex;border:0.5px solid var(--card-border);border-radius:3px;overflow:hidden}
+.filter-btn{padding:9px 18px;font-family:'Noto Serif TC',serif;font-size:10px;letter-spacing:.22em;color:var(--text-muted);background:transparent;border:none;cursor:pointer;transition:all .3s}
+.filter-btn.active{background:rgba(180,130,60,0.12);color:var(--amber)}
+.filter-btn+.filter-btn{border-left:0.5px solid var(--card-border)}
+.sort-wrap{display:flex;align-items:center;gap:8px}
+.sort-label{font-size:10px;color:var(--text-muted);letter-spacing:.2em}
+.sort-btn{font-size:10px;color:var(--text-muted);letter-spacing:.18em;background:transparent;border:0.5px solid rgba(180,130,60,0.15);padding:5px 10px;border-radius:2px;cursor:pointer;font-family:'Noto Serif TC',serif;transition:all .3s}
+.sort-btn.active{color:var(--amber);border-color:rgba(180,130,60,0.35)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;padding:8px 32px 80px;max-width:1100px;margin:0 auto}
+.card{background:var(--paper);border-radius:3px;padding:26px 24px 20px;cursor:pointer;transition:transform .3s,box-shadow .3s;border:0.5px solid rgba(120,80,20,0.18);box-shadow:0 2px 16px rgba(0,0,0,0.35);position:relative;overflow:hidden}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.5)}
+.card-top{position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,rgba(180,130,40,0.35),transparent)}
+.card-lines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(100,70,20,0.05) 26px,rgba(100,70,20,0.05) 27px);pointer-events:none}
+.card-tag{display:inline-block;font-size:9px;letter-spacing:.28em;color:var(--warm);background:rgba(180,100,20,0.1);border:0.5px solid rgba(180,100,20,0.2);padding:3px 9px;border-radius:20px;margin-bottom:13px;text-transform:uppercase;position:relative}
+.card-title{font-size:15px;font-weight:500;color:var(--ink);letter-spacing:.06em;line-height:1.55;margin-bottom:10px;position:relative}
+.card-excerpt{font-size:12px;color:var(--ink2);line-height:1.95;position:relative}
+.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:0.5px solid rgba(120,80,20,0.14);position:relative}
+.card-date{font-size:10px;color:var(--ink3);letter-spacing:.18em}
+.card-actions{display:flex;align-items:center;gap:12px}
+.card-read{font-size:10px;color:var(--warm);letter-spacing:.22em}
+.heart-btn{display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Noto Serif TC',serif;font-size:12px;color:var(--ink3);transition:all .2s;padding:0;position:relative}
+.heart-btn:hover{color:#c0392b}
+.heart-btn.liked{color:#c0392b}
+.heart-btn span{font-size:10px;letter-spacing:.1em}
+
+.empty{text-align:center;padding:60px;color:var(--text-muted);font-size:12px;letter-spacing:.2em;grid-column:1/-1}
+
+/* 匿名信箱區 */
+.mailbox{background:linear-gradient(180deg,#0E0906,#150E09);padding:60px 32px;border-top:0.5px solid rgba(180,130,60,0.1)}
+.mailbox-inner{max-width:560px;margin:0 auto;text-align:center}
+.mailbox-label{font-size:10px;letter-spacing:.5em;color:var(--gold-dim);margin-bottom:12px;text-transform:uppercase}
+.mailbox-title{font-size:clamp(18px,2.5vw,24px);font-weight:300;color:var(--amber);letter-spacing:.1em;line-height:1.6;margin-bottom:10px}
+.mailbox-sub{font-size:12px;color:var(--text-muted);letter-spacing:.15em;line-height:1.9;margin-bottom:32px}
+.mailbox-form{display:flex;flex-direction:column;gap:14px}
+.mailbox-input{background:rgba(245,237,216,0.06);border:0.5px solid rgba(180,130,60,0.2);border-radius:3px;padding:14px 16px;font-family:'Noto Serif TC',serif;font-size:13px;color:var(--amber-soft);letter-spacing:.05em;outline:none;transition:border .3s;resize:none}
+.mailbox-input::placeholder{color:var(--text-muted)}
+.mailbox-input:focus{border-color:rgba(180,130,60,0.45)}
+.mailbox-btn{padding:12px 32px;background:linear-gradient(135deg,#7A5218,#D4962E);color:#0E0906;font-family:'Noto Serif TC',serif;font-size:12px;letter-spacing:.3em;border:none;border-radius:2px;cursor:pointer;transition:all .3s;align-self:center}
+.mailbox-btn:hover{box-shadow:0 4px 20px rgba(212,150,46,.3);transform:translateY(-1px)}
+.mailbox-success{font-size:12px;color:var(--amber);letter-spacing:.2em;margin-top:8px;display:none}
+
+/* modal */
+.overlay{display:none;position:fixed;inset:0;background:rgba(8,4,2,0.9);z-index:300;overflow-y:auto;padding:32px 16px;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--paper);max-width:620px;width:100%;border-radius:4px;padding:40px 36px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.7);align-self:flex-start;margin-top:20px}
+.modal-close{position:absolute;top:16px;right:20px;font-size:16px;color:var(--ink3);cursor:pointer;background:none;border:none;font-family:serif;padding:4px}
+.modal-tag{font-size:9px;letter-spacing:.35em;color:var(--warm);text-transform:uppercase;margin-bottom:12px}
+.modal-title{font-size:20px;font-weight:400;color:var(--ink);letter-spacing:.07em;line-height:1.55;margin-bottom:8px}
+.modal-date{font-size:10px;color:var(--ink3);letter-spacing:.2em;margin-bottom:22px;padding-bottom:16px;border-bottom:0.5px solid rgba(120,80,20,0.18)}
+.modal-body{font-size:13px;color:var(--ink2);line-height:2.2}
+.modal-body p+p{margin-top:1em}
+
+footer{background:#060402;padding:24px 32px;text-align:center;border-top:0.5px solid rgba(180,130,60,0.08)}
+footer p{font-size:10px;color:var(--gold-dim);letter-spacing:.35em}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-brand">語光龍行</span>
+  <a class="nav-back" href="index.html">← 返回主頁</a>
+</nav>
+
+<section class="hero">
+  <p class="hero-label">那些被看見的時刻</p>
+  <h1 class="hero-title">靈魂圖書館</h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">催眠的旅程 · 靈魂的共鳴 · 靜心的畫面<br>每一則，都來自內在的真實</p>
+</section>
+
+<div class="controls">
+  <div class="filter-wrap">
+    <button class="filter-btn active" id="f-all">全部</button>
+    <button class="filter-btn" id="f-hypno">催眠小故事</button>
+    <button class="filter-btn" id="f-journal">日常筆記</button>
+  </div>
+  <div class="sort-wrap">
+    <span class="sort-label">排序</span>
+    <button class="sort-btn active" id="s-new">最新</button>
+    <button class="sort-btn" id="s-old">最舊</button>
+  </div>
+</div>
+
+<div class="cards" id="grid"></div>
+
+<!-- 匿名信箱 -->
+<section class="mailbox">
+  <div class="mailbox-inner">
+    <p class="mailbox-label">匿名信箱</p>
+    <h2 class="mailbox-title">有什麼想說的嗎</h2>
+    <p class="mailbox-sub">問題、感受、或只是想留下一句話<br>我會看到，視內容有機會公開回覆</p>
+    <div class="mailbox-form">
+      <textarea class="mailbox-input" id="msgText" rows="4" placeholder="寫下你想說的……"></textarea>
+      <button class="mailbox-btn" onclick="sendMsg()">投遞</button>
+      <p class="mailbox-success" id="msgOk">✦ 已收到，謝謝你的留言</p>
+    </div>
+  </div>
+</section>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="modal-close" id="mClose">✕</button>
+    <div class="modal-tag" id="mTag"></div>
+    <div class="modal-title" id="mTitle"></div>
+    <div class="modal-date" id="mDate"></div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<footer>
+  <p>語光龍行　｜　意識清明 · 真實轉化</p>
+</footer>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, runTransaction, push, set, onValue }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyATfwfL9MOgEq8jqDNP-lexssaifnSxRx8",
+  authDomain: "library-cbd74.firebaseapp.com",
+  databaseURL: "https://library-cbd74-default-rtdb.firebaseio.com",
+  projectId: "library-cbd74",
+  storageBucket: "library-cbd74.firebasestorage.app",
+  messagingSenderId: "351053374671",
+  appId: "1:351053374671:web:ec8d6390cdaa7668e803ba"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ── 愛心 ──
+window.toggleHeart = function(id, el) {
+  var key = 'liked_' + id;
+  var liked = localStorage.getItem(key);
+  var heartRef = ref(db, 'hearts/' + id);
+  if (!liked) {
+    runTransaction(heartRef, function(cur) { return (cur || 0) + 1; });
+    localStorage.setItem(key, '1');
+    el.classList.add('liked');
+  } else {
+    runTransaction(heartRef, function(cur) { return Math.max((cur || 1) - 1, 0); });
+    localStorage.removeItem(key);
+    el.classList.remove('liked');
+  }
+};
+
+window.listenHearts = function(id) {
+  onValue(ref(db, 'hearts/' + id), function(snap) {
+    var el = document.getElementById('heart-count-' + id);
+    if (el) el.textContent = snap.val() || 0;
+  });
+};
+
+// ── 匿名信箱 ──
+window.sendMsg = function() {
+  var txt = document.getElementById('msgText').value.trim();
+  if (!txt) return;
+  var newRef = push(ref(db, 'messages'));
+  set(newRef, { text: txt, time: new Date().toISOString() }).then(function() {
+    document.getElementById('msgText').value = '';
+    var ok = document.getElementById('msgOk');
+    ok.style.display = 'block';
+    setTimeout(function(){ ok.style.display = 'none'; }, 3000);
+  });
+};
+</script>
+
+<script>
+/*
+==============================================
+  新增故事教學
+==============================================
+  在下方 stories 陣列裡，複製以下模板並填入內容：
+
+  {
+    id: [流水號，每篇唯一，數字遞增],
+    type: 'hypno',        // 催眠小故事
+          'journal',      // 日常筆記
+    tag: '催眠小故事',    // 或 '日常筆記'
+    date: 'YYYY-MM-DD',   // 日期，例如 '2025-06-01'
+    title: '你的標題',
+    excerpt: '摘要文字，顯示在卡片上，約50字以內',
+    body: '<p>第一段</p><p>第二段</p>'
+  },
+==============================================
+*/
+var stories=[
+  {id:1,type:'hypno',tag:'催眠小故事',date:'2025-03-12',
+   title:'她說，那個房間一直是鎖著的',
+   excerpt:'個案在催眠中走進了一棟她從未見過的建築。走廊盡頭有一扇門，她知道那扇門很重要——但她說，她一直不敢靠近。',
+   body:'<p>個案在催眠中走進了一棟她從未見過的建築。走廊盡頭有一扇門，她知道那扇門很重要——但她說，她一直不敢靠近。</p><p>我們花了一段時間只是陪她站在走廊上。不催促，不分析，只是讓她感受自己的腳踩在地板上的重量。</p><p>然後她說：「我想進去了。」</p><p>門後是一個她七歲時常去的地方。她在那裡哭了很久，但哭完之後，她說她覺得很輕。</p><p>後來她告訴我，那扇門她已經在夢裡夢到很多次了，每次都繞開走。那天是第一次，她走了進去。</p>'},
+  {id:2,type:'journal',tag:'日常筆記',date:'2025-04-01',
+   title:'今天靜心看見一片海',
+   excerpt:'不是真實的海，但那個藍色非常真實。我站在水邊，感覺腳下的沙是溫的。有一條光從水面下升上來，直接進入胸口。',
+   body:'<p>不是真實的海，但那個藍色非常真實。</p><p>我站在水邊，感覺腳下的沙是溫的。有一條光從水面下升上來，直接進入胸口。不痛，但很震撼，像是什麼東西被打開了。</p><p>靜心結束後我坐了很久。那個感覺還在。</p><p>我想，也許有些事情不需要被理解，只需要被感受。</p>'},
+  {id:3,type:'hypno',tag:'催眠小故事',date:'2025-04-18',
+   title:'他第一次見到了自己的內在小孩',
+   excerpt:'他說沒想到那個小孩這麼小，才四歲左右，坐在牆角，抱著膝蓋。「他看起來很害怕，但其實他只是需要有人陪。」',
+   body:'<p>他是一個看起來很理性的人，來做催眠之前說他「不太相信這些」，但願意試試看。</p><p>在催眠裡，他走進了一個昏暗的房間。牆角坐著一個小小的男孩，抱著膝蓋，臉朝著牆。</p><p>他沉默了很久。然後他說：「他看起來很害怕。」</p><p>我問他：那你想對他說什麼？</p><p>他又沉默了更久。最後他說了一句話，聲音很輕：「我在這裡了。」</p><p>後來他告訴我，那是他這輩子第一次對自己說出那句話。</p>'},
+  {id:4,type:'journal',tag:'日常筆記',date:'2025-05-02',
+   title:'關於「準備好」這件事',
+   excerpt:'今天一個學員問我：我要怎麼知道自己準備好了？我說，你現在坐在這裡問我這個問題，就已經是準備好的一部分了。',
+   body:'<p>今天一個學員問我：「我要怎麼知道自己準備好了？」</p><p>我想了一下，說：「你現在坐在這裡問我這個問題，就已經是準備好的一部分了。」</p><p>「準備好」從來不是一個到來的時刻。它是一個一直在發生的過程。你每一次願意靠近自己一點，就是準備好了一點。</p><p>很多人等待一個完全沒有恐懼的時刻才開始。但其實，帶著恐懼走進去，才是真正的勇氣。</p>'}
+];
+
+var cur='all', curSort='new';
+function fmt(d){var t=new Date(d);return t.getFullYear()+' · '+String(t.getMonth()+1).padStart(2,'0')+' · '+String(t.getDate()).padStart(2,'0');}
+
+function render(){
+  var data=stories.filter(function(s){return cur==='all'||s.type===cur;});
+  data.sort(function(a,b){return curSort==='new'?new Date(b.date)-new Date(a.date):new Date(a.date)-new Date(b.date);});
+  var g=document.getElementById('grid');
+  if(!data.length){g.innerHTML='<div class="empty">這個分類目前還沒有故事。</div>';return;}
+  g.innerHTML=data.map(function(s){
+    var likedClass=localStorage.getItem('liked_'+s.id)?'liked':'';
+    return '<div class="card"><div class="card-top"></div><div class="card-lines"></div>'+
+      '<div class="card-tag">'+s.tag+'</div>'+
+      '<div class="card-title" onclick="openM('+s.id+')" style="cursor:pointer">'+s.title+'</div>'+
+      '<div class="card-excerpt" onclick="openM('+s.id+')" style="cursor:pointer">'+s.excerpt+'</div>'+
+      '<div class="card-footer">'+
+        '<span class="card-date">'+fmt(s.date)+'</span>'+
+        '<div class="card-actions">'+
+          '<button class="heart-btn '+likedClass+'" id="heart-btn-'+s.id+'" onclick="toggleHeart('+s.id+', this)">♥ <span id="heart-count-'+s.id+'">0</span></button>'+
+          '<span class="card-read" onclick="openM('+s.id+')" style="cursor:pointer">閱讀全文 →</span>'+
+        '</div>'+
+      '</div></div>';
+  }).join('');
+  // 監聽每篇愛心數
+  data.forEach(function(s){ if(window.listenHearts) listenHearts(s.id); });
+}
+
+function openM(id){
+  var s=stories.find(function(x){return x.id===id;});if(!s)return;
+  document.getElementById('mTag').textContent=s.tag;
+  document.getElementById('mTitle').textContent=s.title;
+  document.getElementById('mDate').textContent=fmt(s.date);
+  document.getElementById('mBody').innerHTML=s.body;
+  document.getElementById('overlay').classList.add('open');
+}
+function setA(cls,el){document.querySelectorAll(cls).forEach(function(b){b.classList.remove('active');});el.classList.add('active');}
+document.getElementById('f-all').onclick=function(){cur='all';setA('.filter-btn',this);render();};
+document.getElementById('f-hypno').onclick=function(){cur='hypno';setA('.filter-btn',this);render();};
+document.getElementById('f-journal').onclick=function(){cur='journal';setA('.filter-btn',this);render();};
+document.getElementById('s-new').onclick=function(){curSort='new';setA('.sort-btn',this);render();};
+document.getElementById('s-old').onclick=function(){curSort='old';setA('.sort-btn',this);render();};
+document.getElementById('overlay').onclick=function(e){if(e.target===this)this.classList.remove('open');};
+document.getElementById('mClose').onclick=function(){document.getElementById('overlay').classList.remove('open');};
+render();
+</script>
+</body>
+</html>
