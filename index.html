@@ -75,6 +75,7 @@ footer p{font-size:11px;color:var(--gold-dim);letter-spacing:.35em}
 <body>
 
 <nav class="nav">
+  <a href="library.html">靈魂圖書館</a>
   <a href="#services">服務項目</a>
   <a href="#testimonials">客戶見證</a>
   <a href="#finalcta">預約服務</a>
@@ -83,6 +84,9 @@ footer p{font-size:11px;color:var(--gold-dim);letter-spacing:.35em}
 <section class="hero">
   <canvas class="wave" id="waveHero"></canvas>
   <canvas class="wave" id="rippleHero"></canvas>
+  <div style="position:relative;z-index:1;margin-bottom:32px">
+    <img src="https://github.com/light-the-soul/DragonLight/blob/main/logo.png?raw=true" alt="語光龍行 Logo" style="width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(201,168,76,0.35))">
+  </div>
   <p class="hero-brand">語光龍行</p>
   <h1 class="hero-title">你不需要被修復<br>你只是還沒想起自己是誰</h1>
   <div class="gold-line"></div>
@@ -92,9 +96,6 @@ footer p{font-size:11px;color:var(--gold-dim);letter-spacing:.35em}
 
 <div class="story-wrap">
   <div style="max-width:900px;margin:0 auto">
-    <div style="text-align:center;margin-bottom:32px">
-      <img src="https://github.com/light-the-soul/DragonLight/blob/main/logo.png?raw=true" alt="語光龍行 Logo" style="width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(201,168,76,0.35))">
-    </div>
     <p class="section-label">關於語光龍行</p>
     <h2 class="section-title">從數字的精準<br>到靈魂的深度</h2>
     <p class="story-body">
@@ -141,17 +142,17 @@ footer p{font-size:11px;color:var(--gold-dim);letter-spacing:.35em}
   <div class="testimony-grid">
     <div class="testimony-card">
       <p class="testimony-text">Mana的引導讓人非常輕鬆也很快能進入狀態，也帶領我看見自己身體能量卡住，還有腦中有根深蒂固限制性想法，並且將其一一移除。這次的療癒結束，內在收穫滿滿，也覺得好開心✨ 內在需要被清理被看見，期待之後我的實相也能跟著轉變！</p>
-      <p class="testimony-name">— Ann · 天使靈氣學員</p>
+      <p class="testimony-name">— A · 天使靈氣學員</p>
       <div class="testimony-tags"><span class="tag">#潛意識探索</span><span class="tag">#能量清理</span><span class="tag">#元辰宮探索</span></div>
     </div>
     <div class="testimony-card">
       <p class="testimony-text">不得不說很神奇的是在補滿米缸以後，我去換先前買的彩券，意外中了$400，真的是很有趣的體驗。非常感謝Mana，不因為時間因素催促，很有耐心的引導我陪伴我完成這兩次的體驗旅程。日後有機會還會想找Mana協助撿靈魂碎片＆觀元辰宮。</p>
-      <p class="testimony-name">— Chung · 天使靈氣學員</p>
+      <p class="testimony-name">— C · 天使靈氣學員</p>
       <div class="testimony-tags"><span class="tag">#潛意識探索</span><span class="tag">#元辰宮探索</span><span class="tag">#收回靈魂碎片</span></div>
     </div>
     <div class="testimony-card">
       <p class="testimony-text">很有趣的生命樹體驗，有別於上次妳看到再轉述給我，這次是我自己看到，神奇的是妳竟然能看到我想像的畫面，好酷🧐 妳的聲音溫柔穩定，讓人放鬆很快的跟著妳的話語進入狀態，過程舒服順利😊</p>
-      <p class="testimony-name">— Huang · 同事</p>
+      <p class="testimony-name">— H · 同事</p>
       <div class="testimony-tags"><span class="tag">#生命樹</span><span class="tag">#能量清理</span><span class="tag">#身心指標</span></div>
     </div>
   </div>
@@ -186,32 +187,32 @@ footer p{font-size:11px;color:var(--gold-dim);letter-spacing:.35em}
 
 <script>
 function initWave(id,tOff){
-  const c=document.getElementById(id);if(!c)return;
-  const ctx=c.getContext('2d'),par=c.parentElement;
-  let W,H,t=tOff||0;
+  var c=document.getElementById(id);if(!c)return;
+  var ctx=c.getContext('2d'),par=c.parentElement;
+  var W,H,t=tOff||0;
   function resize(){W=c.width=par.offsetWidth;H=c.height=par.offsetHeight}
   resize();window.addEventListener('resize',resize);
-  let streaks=[];
-  function mkS(){const iC=Math.random()>.35;streaks.push({x:Math.random()*W,y:Math.random()*H,len:80+Math.random()*140,angle:Math.PI*(.05+Math.random()*.25),alpha:iC?.12+Math.random()*.12:.06+Math.random()*.08,speed:.5+Math.random()*.6,progress:0,col:iC?'0,196,212':'201,168,76',width:iC?1.2:.7});}
-  for(let i=0;i<8;i++)mkS();setInterval(mkS,1400);
+  var streaks=[];
+  function mkS(){var iC=Math.random()>.35;streaks.push({x:Math.random()*W,y:Math.random()*H,len:80+Math.random()*140,angle:Math.PI*(.05+Math.random()*.25),alpha:iC?.12+Math.random()*.12:.06+Math.random()*.08,speed:.5+Math.random()*.6,progress:0,col:iC?'0,196,212':'201,168,76',width:iC?1.2:.7});}
+  for(var i=0;i<8;i++)mkS();setInterval(mkS,1400);
   function draw(){
     ctx.clearRect(0,0,W,H);t+=.007;
-    const waves=[{amp:20,freq:.007,spd:.55,a:.07,col:'0,196,212',w:1.4},{amp:14,freq:.011,spd:.85,a:.06,col:'0,196,212',w:1.0},{amp:9,freq:.016,spd:1.1,a:.05,col:'26,212,200',w:.8},{amp:25,freq:.004,spd:.35,a:.04,col:'0,153,170',w:1.8},{amp:6,freq:.022,spd:1.4,a:.04,col:'201,168,76',w:.5}];
-    waves.forEach(w=>{const rows=Math.ceil(H/24);for(let r=0;r<rows;r++){const baseY=r*24+12;ctx.beginPath();for(let x=0;x<=W;x+=2){const y=baseY+Math.sin(x*w.freq+t*w.spd+r*.9)*w.amp;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.strokeStyle=`rgba(${w.col},${w.a*(0.3+0.7*(r/rows))})`;ctx.lineWidth=w.w;ctx.stroke();}});
-    ctx.save();for(let i=0;i<6;i++){const sx=(t*80+i*137)%W,sy=H*(.2+i*.12)+Math.sin(t*1.2+i)*18,g=ctx.createRadialGradient(sx,sy,0,sx,sy,22);g.addColorStop(0,'rgba(0,229,245,0.18)');g.addColorStop(1,'rgba(0,196,212,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(sx,sy,22,0,Math.PI*2);ctx.fill();}ctx.restore();
-    streaks=streaks.filter(s=>{s.progress+=s.speed;const x2=s.x+Math.cos(s.angle)*s.progress,y2=s.y+Math.sin(s.angle)*s.progress,x1=s.x+Math.cos(s.angle)*Math.max(0,s.progress-50),y1=s.y+Math.sin(s.angle)*Math.max(0,s.progress-50),g=ctx.createLinearGradient(x1,y1,x2,y2);g.addColorStop(0,`rgba(${s.col},0)`);g.addColorStop(.5,`rgba(${s.col},${s.alpha*(1-s.progress/s.len*.5)})`);g.addColorStop(1,`rgba(${s.col},0)`);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=g;ctx.lineWidth=s.width;ctx.stroke();return s.progress<s.len+50;});
+    var waves=[{amp:20,freq:.007,spd:.55,a:.07,col:'0,196,212',w:1.4},{amp:14,freq:.011,spd:.85,a:.06,col:'0,196,212',w:1.0},{amp:9,freq:.016,spd:1.1,a:.05,col:'26,212,200',w:.8},{amp:25,freq:.004,spd:.35,a:.04,col:'0,153,170',w:1.8},{amp:6,freq:.022,spd:1.4,a:.04,col:'201,168,76',w:.5}];
+    waves.forEach(function(w){var rows=Math.ceil(H/24);for(var r=0;r<rows;r++){var baseY=r*24+12;ctx.beginPath();for(var x=0;x<=W;x+=2){var y=baseY+Math.sin(x*w.freq+t*w.spd+r*.9)*w.amp;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.strokeStyle='rgba('+w.col+','+(w.a*(0.3+0.7*(r/rows)))+')';ctx.lineWidth=w.w;ctx.stroke();}});
+    ctx.save();for(var i=0;i<6;i++){var sx=(t*80+i*137)%W,sy=H*(.2+i*.12)+Math.sin(t*1.2+i)*18,g=ctx.createRadialGradient(sx,sy,0,sx,sy,22);g.addColorStop(0,'rgba(0,229,245,0.18)');g.addColorStop(1,'rgba(0,196,212,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(sx,sy,22,0,Math.PI*2);ctx.fill();}ctx.restore();
+    streaks=streaks.filter(function(s){s.progress+=s.speed;var x2=s.x+Math.cos(s.angle)*s.progress,y2=s.y+Math.sin(s.angle)*s.progress,x1=s.x+Math.cos(s.angle)*Math.max(0,s.progress-50),y1=s.y+Math.sin(s.angle)*Math.max(0,s.progress-50),g=ctx.createLinearGradient(x1,y1,x2,y2);g.addColorStop(0,'rgba('+s.col+',0)');g.addColorStop(.5,'rgba('+s.col+','+s.alpha*(1-s.progress/s.len*.5)+')');g.addColorStop(1,'rgba('+s.col+',0)');ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=g;ctx.lineWidth=s.width;ctx.stroke();return s.progress<s.len+50;});
     requestAnimationFrame(draw);}
   draw();}
 
 function initRipples(id){
-  const c=document.getElementById(id);if(!c)return;
-  const ctx=c.getContext('2d'),par=c.parentElement;
-  let W,H,drops=[];
+  var c=document.getElementById(id);if(!c)return;
+  var ctx=c.getContext('2d'),par=c.parentElement;
+  var W,H,drops=[];
   function resize(){W=c.width=par.offsetWidth;H=c.height=par.offsetHeight}
   resize();window.addEventListener('resize',resize);
-  function mk(){const iC=Math.random()>.3;drops.push({x:Math.random()*W,y:Math.random()*H,r:0,max:60+Math.random()*110,a:iC?.14+Math.random()*.1:.07+Math.random()*.07,sp:.4+Math.random()*.5,col:iC?'0,196,212':'201,168,76'});}
-  for(let i=0;i<6;i++)mk();setInterval(mk,1500);
-  function draw(){ctx.clearRect(0,0,W,H);drops=drops.filter(d=>{d.r+=d.sp;const p=d.r/d.max,a=d.a*(1-p);ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.strokeStyle=`rgba(${d.col},${a})`;ctx.lineWidth=.8;ctx.stroke();if(d.r>20){ctx.beginPath();ctx.arc(d.x,d.y,d.r*.55,0,Math.PI*2);ctx.strokeStyle=`rgba(${d.col},${a*.4})`;ctx.lineWidth=.4;ctx.stroke();}return d.r<d.max;});requestAnimationFrame(draw);}
+  function mk(){var iC=Math.random()>.3;drops.push({x:Math.random()*W,y:Math.random()*H,r:0,max:60+Math.random()*110,a:iC?.14+Math.random()*.1:.07+Math.random()*.07,sp:.4+Math.random()*.5,col:iC?'0,196,212':'201,168,76'});}
+  for(var i=0;i<6;i++)mk();setInterval(mk,1500);
+  function draw(){ctx.clearRect(0,0,W,H);drops=drops.filter(function(d){d.r+=d.sp;var p=d.r/d.max,a=d.a*(1-p);ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.strokeStyle='rgba('+d.col+','+a+')';ctx.lineWidth=.8;ctx.stroke();if(d.r>20){ctx.beginPath();ctx.arc(d.x,d.y,d.r*.55,0,Math.PI*2);ctx.strokeStyle='rgba('+d.col+','+(a*.4)+')';ctx.lineWidth=.4;ctx.stroke();}return d.r<d.max;});requestAnimationFrame(draw);}
   draw();}
 
 initWave('waveHero',0);initWave('waveCta',2.5);
