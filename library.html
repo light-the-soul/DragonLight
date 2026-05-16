@@ -281,7 +281,14 @@ function openM(id){
   document.getElementById('overlay').classList.add('open');
 }
 function setA(cls,el){document.querySelectorAll(cls).forEach(function(b){b.classList.remove('active');});el.classList.add('active');}
-document.getElementById('f-all').onclick=function(){cur='all';setA('.filter-btn',this);render();
+document.getElementById('f-all').onclick=function(){cur='all';setA('.filter-btn',this);render();};
+document.getElementById('f-hypno').onclick=function(){cur='hypno';setA('.filter-btn',this);render();};
+document.getElementById('f-journal').onclick=function(){cur='journal';setA('.filter-btn',this);render();};
+document.getElementById('s-new').onclick=function(){curSort='new';setA('.sort-btn',this);render();};
+document.getElementById('s-old').onclick=function(){curSort='old';setA('.sort-btn',this);render();};
+document.getElementById('overlay').onclick=function(e){if(e.target===this)this.classList.remove('open');};
+document.getElementById('mClose').onclick=function(){document.getElementById('overlay').classList.remove('open');};
+render();
 
 // ── 暖光粒子 (CSS版) ──
 function initParticles(id, count){
@@ -307,17 +314,8 @@ function initParticles(id, count){
     wrap.appendChild(d);
   }
 }
-window.addEventListener('load',function(){
-  initParticles('heroParticles',50);
-  initParticles('mailParticles',28);
-});};
-document.getElementById('f-hypno').onclick=function(){cur='hypno';setA('.filter-btn',this);render();};
-document.getElementById('f-journal').onclick=function(){cur='journal';setA('.filter-btn',this);render();};
-document.getElementById('s-new').onclick=function(){curSort='new';setA('.sort-btn',this);render();};
-document.getElementById('s-old').onclick=function(){curSort='old';setA('.sort-btn',this);render();};
-document.getElementById('overlay').onclick=function(e){if(e.target===this)this.classList.remove('open');};
-document.getElementById('mClose').onclick=function(){document.getElementById('overlay').classList.remove('open');};
-render();
+initParticles('heroParticles',50);
+initParticles('mailParticles',28);
 </script>
 </body>
 </html>
