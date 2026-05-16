@@ -287,22 +287,19 @@ function initParticles(id, count) {
   }
   resize();
   window.addEventListener('resize', resize);
-  function seed() {
-    particles = [];
-    for (var i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * W, y: Math.random() * H,
-        r: 0.8 + Math.random() * 1.8,
-        alpha: 0.1 + Math.random() * 0.2,
-        speedX: (Math.random() - 0.5) * 0.22,
-        speedY: -0.08 - Math.random() * 0.25,
-        pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.008 + Math.random() * 0.012,
-        col: Math.random() > 0.35 ? '212,150,46' : '232,184,109'
-      });
-    }
+  particles = [];
+  for (var i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: 0.8 + Math.random() * 1.8,
+      alpha: 0.1 + Math.random() * 0.2,
+      speedX: (Math.random() - 0.5) * 0.22,
+      speedY: -0.08 - Math.random() * 0.25,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: 0.008 + Math.random() * 0.012,
+      col: Math.random() > 0.35 ? '212,150,46' : '232,184,109'
+    });
   }
-  seed();
   function draw() {
     ctx.clearRect(0, 0, W, H);
     particles.forEach(function(p) {
@@ -321,10 +318,10 @@ function initParticles(id, count) {
   }
   draw();
 }
-setTimeout(function() {
+window.addEventListener('load', function() {
   initParticles('heroParticles', 55);
   initParticles('mailParticles', 30);
-}, 300);};
+});};
 document.getElementById('f-hypno').onclick=function(){cur='hypno';setA('.filter-btn',this);render();};
 document.getElementById('f-journal').onclick=function(){cur='journal';setA('.filter-btn',this);render();};
 document.getElementById('s-new').onclick=function(){curSort='new';setA('.sort-btn',this);render();};
